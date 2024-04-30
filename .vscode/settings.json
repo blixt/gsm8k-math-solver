@@ -1,0 +1,14 @@
+{
+	"search.exclude": {
+		"**/.yarn": true,
+		"**/.pnp.*": true
+	},
+	"files.exclude": {
+		"**/*.cjs": true,
+		"**/*.js": true,
+		"**/*.js.map": true,
+		"**/*.mjs": true
+	},
+	"typescript.tsdk": ".yarn/sdks/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true
+}

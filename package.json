@@ -1,0 +1,12 @@
+{
+	"name": "mathsolver",
+	"packageManager": "yarn@4.1.1",
+	"devDependencies": {
+		"@biomejs/biome": "^1.7.1",
+		"@types/node": "^20.12.7",
+		"typescript": "^5.4.5"
+	},
+	"dependencies": {
+		"isolated-vm": "^4.7.2"
+	}
+}
