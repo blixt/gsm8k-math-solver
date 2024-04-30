@@ -1,4 +1,4 @@
-# mathsolver
+# gsm8k-math-solver
 
 To run, first make sure you have [Yarn](https://yarnpkg.com/) and
 [Ollama](https://ollama.com/) installed.
