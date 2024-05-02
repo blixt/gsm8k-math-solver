@@ -27,6 +27,44 @@ evaluates step by step, we can solve more complex problems because code
 naturally splits them up into logical units, and the LLM has seen a lot of code
 to be able to predict its behavior.
 
+Furthermore, while the comments contain the answers by the LLM, also being able
+to evaluate the code allows a kind of cross-referencing to verify that the LLM
+is consistent. If there is a mismatch, one could conceivably get the LLM to
+self-correct.
+
+## The reality
+
+It seems the most recent LLMs (as of writing this, Llama 3, GPT-4 Turbo, Claude
+3 Opus) have learned to navigate multi-step reasoning well enough to
+automatically answer most of the GSM8K problems as correctly as any framework
+would. The code that the LLM is encouraged to write with the framework presented
+here actually does sometimes end up being more correct than what the LLM can
+reason its way to, but the main reason LLMs fail equally with or without this
+framework is interpreting nuances in the problem (such as misinterpreting when a
+value should be compounding versus not).
+
+Even less capable LLMs are right some percentage of the time, so it seems
+reasonable to assume that some form of sampling would work, but most likely not
+a majority sampling, so probably most frameworks will only be able to raise the
+model's capability by a relatively small percentage, while model capabilities
+from version to version seem to raise it by a lot more.
+
+Finally, the GSM8K data set is by now mostly learned by LLMs as far as I can
+tell, so it's not even a good benchmark anymore. For example, just asking Llama
+3 70B one of the problems in the test data set of GSM8K, you will not only get a
+reasonable looking answer, you will even get the characteristic `#### 123` line
+at the end which is exactly how solutions in GSM8K are formatted.
+
+## Further investigation
+
+It would be interesting to see this framework used for other types of problems,
+such as using the evaluation comments as a way to get the LLM to verify the code
+that it writes, say for a unit test which should be easy to run and verify.
+
+The GSM8K data set contains a lot of algebraic problems, which is not a good
+match for JavaScript. Maybe a better idea would have been to use Python with a
+library like SymPy available to the LLM so that it doesn't have to use loops.
+
 ## Examples
 
 ### Question 1
