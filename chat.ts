@@ -3,7 +3,14 @@ export interface Message {
 	content: string;
 }
 
-export interface ChatResponse {
+export interface IncompleteChatStreamChunk {
+	model: string;
+	created_at: string;
+	message: Message;
+	done: false;
+}
+
+export interface CompleteChatStreamChunk {
 	model: string;
 	created_at: string;
 	message: Message;
@@ -15,8 +22,30 @@ export interface ChatResponse {
 	eval_duration: number;
 }
 
-export async function chat(model: string, messages: Message[]): Promise<ChatResponse> {
-	// You need to have Ollama running.
+export type ChatStreamChunk = IncompleteChatStreamChunk | CompleteChatStreamChunk;
+
+// This should probably just be an array of byte arrays with an index pointer
+// into the first byte array, where all consumed arrays are removed.
+class JSONLineStream<T> implements AsyncIterable<T> {
+	private buffer = "";
+	private index = 0;
+
+	append(chunk: Uint8Array): void {
+		this.buffer += new TextDecoder().decode(chunk);
+	}
+
+	async *[Symbol.asyncIterator](): AsyncGenerator<T> {
+		while (true) {
+			const newlineIndex = this.buffer.indexOf("\n", this.index);
+			if (newlineIndex === -1) break;
+			const line = this.buffer.slice(this.index, newlineIndex);
+			this.index = newlineIndex + 1;
+			yield JSON.parse(line) as T;
+		}
+	}
+}
+
+export async function* chat(model: string, messages: Message[]): AsyncGenerator<ChatStreamChunk> {
 	const response = await fetch("http://localhost:11434/api/chat", {
 		method: "POST",
 		headers: {
@@ -25,9 +54,18 @@ export async function chat(model: string, messages: Message[]): Promise<ChatResp
 		body: JSON.stringify({
 			model,
 			messages,
-			stream: false,
 		}),
 	});
-	const data = (await response.json()) as ChatResponse;
-	return data;
+	if (!response.ok) {
+		throw new Error(`Unexpected ${response.status} ${response.statusText}`);
+	}
+	if (!response.body) {
+		throw new Error("No response body");
+	}
+	// Read the response body line by line, parsing each line as JSON.
+	const stream = new JSONLineStream<ChatStreamChunk>();
+	for await (const chunk of response.body) {
+		stream.append(chunk);
+		yield* stream;
+	}
 }
