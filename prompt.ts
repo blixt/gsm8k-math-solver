@@ -104,22 +104,18 @@ const exampleSessions: Message[][] = [
 	],
 ];
 const intro =
-	"Respond to all my messages with JavaScript where you analyze my message, then extract any relevant variable values from my text (if any), perform any necessary compute on aforementioned variables whenever that is required to produce an answer, with a comment next to each statement that represents what would happen (and in what order) if the code was evaluated. The code should always end with a `console.log(…)` call where the argument is a string with your final answer. Please read the rules below for additional details.";
+	"Answer the message below by writing JavaScript that would answer it and emulating its output. When writing the JavaScript, analyze the message and extract any relevant variable values (such as numbers, strings, booleans, lists, or the text itself) and make the JavaScript perform any necessary computations on aforementioned variables whenever that is required to produce the correct answer. Each JavaScript statement should end with a comment that shows the execution order and value of the statement, to show what would happen ifthe code was evaluated. The code should always end with a `console.log(…)` call where the argument is a string with your final answer. Please read the rules below for additional details and see the examples for exact structure.";
 
-const environmentRules = [
-	"All variables defined throughout the conversation are available at any point",
-	"It's possible to define a variable with the same name twice, it will just shadow the old one",
+const jsRules = [
 	"Imagine this JavaScript as running a notebook so prefer concise direct code over abstractions",
-	"DO NOT USE functions or loops unless they are required to solve the problem",
-	"You cannot use imports",
-	"All modern browser APIs are available without any security restrictions",
-	"There is no build step or external files",
-];
-
-const outputRules = [
 	"Write your responses entirely within a single code block, DO NOT write anything before or after the code block",
 	"Write the JavaScript logic that generates the correct output without any comments or empty lines",
+	"Do not infer values, instead be explicit about them",
+	"You cannot use imports and there are no global variables or scoped values available to you outside of the code you write",
+	"You may assume that all common browser APIs are available to you",
+	"Avoid using functions or loops unless they are required to solve the problem",
 	"Decompose your logic into multiple statements and lines to avoid a lot of complexity in a single statement of code",
+	"Don't perform too many evaluations or arithmetic on one line, instead split it up into multiple statements",
 	"IMPORTANT: Do not jump to conclusions where you bypass multiple calculations, try to do only one calculation at a time",
 	"After each statement, write the execution step number in square brackets, followed by the resulting value of the statement",
 	'IMPORTANT: After loop blocks that did not immediately break, write a chain of comments (starting with "// Loop continues:") describing how the values change over each loop iteration',
@@ -130,14 +126,9 @@ export function createPrompt(message: string): string {
 	return `${intro}
 
 
-# Environment rules
+# JavaScript rules
 
-${environmentRules.map((rule) => `- ${rule}`).join("\n")}
-
-
-# Output rules
-
-${outputRules.map((rule) => `- ${rule}`).join("\n")}
+${jsRules.map((rule) => `- ${rule}`).join("\n")}
 
 
 # Example sessions (as JSON, one per line)
