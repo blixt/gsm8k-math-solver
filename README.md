@@ -20,6 +20,12 @@ you should see output in the Debug Console.
 
 If you don't use VS Code, just compile with `yarn run tsc` then `node index.js`.
 
+You can also pass a question as an argument to the script, for example:
+
+```sh
+node index.js "How many words does this prompt contain?"
+```
+
 ## The theory
 
 By making the LLM write executable JavaScript and also show how that code
