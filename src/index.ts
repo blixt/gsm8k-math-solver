@@ -1,7 +1,10 @@
 import { writeFileSync } from "node:fs";
-import { createPrompt } from "./prompt";
-import { chat } from "./chat";
-import { testData } from "./data";
+import { createPrompt } from "./prompt.js";
+import { chat } from "./chat.js";
+import { testData } from "./data.js";
+import chalk from "chalk";
+
+chalk.level = 3;
 
 function* inputs(): IterableIterator<{ question: string; answer?: string }> {
 	// Allow a custom question to be passed as an argument. Example:
@@ -34,10 +37,8 @@ async function main() {
 	for (const { question, answer } of inputs()) {
 		const prompt = createPrompt(question);
 
-		console.log("---");
-		console.log("QUESTION:");
-		console.log(question);
-		console.log("---");
+		console.log(chalk.magenta(question));
+		console.log(chalk.gray("---"));
 
 		const before = performance.now();
 		for await (const chunk of chat("llama3:70b", [{ role: "user", content: prompt }])) {
@@ -47,21 +48,19 @@ async function main() {
 				writeFileSync("debug.txt", debugData);
 				break;
 			}
-			process.stdout.write(chunk.message.content);
+			process.stdout.write(chalk.cyan(chunk.message.content));
 		}
 		const chatDuration = performance.now() - before;
 
 		console.log("");
 
 		if (answer) {
-			console.log("---");
-			console.log("EXPECTED ANSWER:");
-			console.log(answer);
+			console.log(chalk.gray("---"));
+			console.log(chalk.green(answer));
 		}
 
-		console.log("---");
-		console.log(`DONE AFTER: ${(chatDuration / 1000).toFixed(2)}s`);
-		console.log("---");
+		console.log(chalk.gray("---"));
+		console.log(chalk.gray(`Done after ${chalk.yellow(`${(chatDuration / 1000).toFixed(2)}s`)}.`));
 		console.log("");
 	}
 }

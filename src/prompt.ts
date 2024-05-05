@@ -1,4 +1,4 @@
-import type { Message } from "./chat";
+import type { Message } from "./chat.js";
 
 const exampleSessions: Message[][] = [
 	[

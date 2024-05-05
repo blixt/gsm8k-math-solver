@@ -6,8 +6,8 @@
 			"request": "launch",
 			"name": "Run",
 			"skipFiles": ["<node_internals>/**"],
-			"program": "${workspaceFolder}/index.js",
-			"outFiles": ["${workspaceFolder}/**/*.js"],
+			"program": "${workspaceFolder}/dist/index.js",
+			"outFiles": ["${workspaceFolder}/dist/**/*"],
 			"preLaunchTask": "Build"
 		}
 	]

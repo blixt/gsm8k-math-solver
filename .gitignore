@@ -13,6 +13,4 @@
 .pnp.*
 
 /debug.txt
-
-/*.js 
-/*.js.map
+/dist

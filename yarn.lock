@@ -268,6 +268,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chalk@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "chalk@npm:5.3.0"
+  checksum: 10c0/8297d436b2c0f95801103ff2ef67268d362021b8210daf8ddbe349695333eb3610a71122172ff3b0272f1ef2cf7cc2c41fdaa4715f52e49ffe04c56340feed09
+  languageName: node
+  linkType: hard
+
 "chownr@npm:^1.1.1":
   version: 1.1.4
   resolution: "chownr@npm:1.1.4"
@@ -662,6 +669,7 @@ __metadata:
   dependencies:
     "@biomejs/biome": "npm:^1.7.1"
     "@types/node": "npm:^20.12.7"
+    chalk: "npm:^5.3.0"
     isolated-vm: "npm:^4.7.2"
     typescript: "npm:^5.4.5"
   languageName: unknown

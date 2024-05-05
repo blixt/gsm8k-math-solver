@@ -2,17 +2,14 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "typescript",
-			"tsconfig": "tsconfig.json",
-			"problemMatcher": ["$tsc"],
+			"label": "Build",
+			"type": "shell",
+			"command": "yarn tsc",
 			"group": {
 				"kind": "build",
 				"isDefault": true
 			},
-			"options": {
-				"shell": { "args": ["-l", "-c", "yarn run tsc"] }
-			},
-			"label": "Build"
+			"problemMatcher": ["$tsc"]
 		}
 	]
 }

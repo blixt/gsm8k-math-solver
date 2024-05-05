@@ -1,10 +1,13 @@
 {
 	"compilerOptions": {
 		"target": "esnext",
-		"module": "commonjs",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
 		"lib": ["esnext"],
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
-		"sourceMap": true
+		"sourceMap": true,
+		"outDir": "dist",
+		"rootDir": "src"
 	}
 }

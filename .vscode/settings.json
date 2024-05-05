@@ -4,10 +4,9 @@
 		"**/.pnp.*": true
 	},
 	"files.exclude": {
-		"**/*.cjs": true,
-		"**/*.js": true,
-		"**/*.js.map": true,
-		"**/*.mjs": true
+		"dist": true,
+		".pnp.cjs": true,
+		".pnp.loader.mjs": true
 	},
 	"typescript.tsdk": ".yarn/sdks/typescript/lib",
 	"typescript.enablePromptUseWorkspaceTsdk": true
