@@ -103,10 +103,18 @@ const exampleSessions: Message[][] = [
 		},
 	],
 ];
-const intro =
-	"Answer the message below by writing JavaScript that would answer it and emulating its output. When writing the JavaScript, analyze the message and extract any relevant variable values (such as numbers, strings, booleans, lists, or the text itself) and make the JavaScript perform any necessary computations on aforementioned variables whenever that is required to produce the correct answer. Each JavaScript statement should end with a comment that shows the execution order and value of the statement, to show what would happen ifthe code was evaluated. The code should always end with a `console.log(…)` call where the argument is a string with your final answer. Please read the rules below for additional details and see the examples for exact structure.";
 
-const jsRules = [
+export function createPrompt(message: string, shots?: number): string {
+	return `Answer the message below using JavaScript in a code block, following the rules and examples below exactly.
+
+# Rules to follow
+
+${[
+	"When writing the JavaScript, analyze the message and extract any relevant variable values (such as numbers, strings, booleans, lists, or the text itself)",
+	"Make the JavaScript perform any necessary computations on aforementioned variables whenever that is required to produce the correct answer",
+	"Each JavaScript statement should end with a comment that shows the execution order and value of the statement, to show what would happen if the code was evaluated",
+	"The code should always end with a `console.log(…)` call where the argument is a string with your final answer",
+	"Please read the rules below for additional details and see the examples for exact structure",
 	"Imagine this JavaScript as running a notebook so prefer concise direct code over abstractions",
 	"Write your responses entirely within a single code block, DO NOT write anything before or after the code block",
 	"Write the JavaScript logic that generates the correct output without any comments or empty lines",
@@ -120,20 +128,17 @@ const jsRules = [
 	"After each statement, write the execution step number in square brackets, followed by the resulting value of the statement",
 	'IMPORTANT: After loop blocks that did not immediately break, write a chain of comments (starting with "// Loop continues:") describing how the values change over each loop iteration',
 	'When possible, try to skip loop iterations in your comments (indicating it with "(...)"), instead inferring what the values would become, just don\'t omit the last iteration where the loop breaks',
-];
-
-export function createPrompt(message: string): string {
-	return `${intro}
-
-
-# JavaScript rules
-
-${jsRules.map((rule) => `- ${rule}`).join("\n")}
+]
+	.map((rule) => `- ${rule}`)
+	.join("\n")}
 
 
 # Example sessions (as JSON, one per line)
 
-${exampleSessions.map((session) => JSON.stringify(session)).join("\n")}
+${exampleSessions
+	.slice(0, shots)
+	.map((session) => JSON.stringify(session))
+	.join("\n")}
 
 
 # Message to be answered
