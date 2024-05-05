@@ -18,12 +18,12 @@ yarn install
 Finally, open the folder in VS Code, go to "Run and Debug" and then "Run" and
 you should see output in the Debug Console.
 
-If you don't use VS Code, just compile with `yarn run tsc` then `node index.js`.
+If you don't use VS Code, just run with `yarn run start`.
 
 You can also pass a question as an argument to the script, for example:
 
 ```sh
-node index.js "How many words does this prompt contain?"
+yarn run start "How many words does this prompt contain?"
 ```
 
 ## The theory
