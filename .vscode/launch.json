@@ -5,10 +5,10 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Run",
-			"skipFiles": ["<node_internals>/**"],
-			"program": "${workspaceFolder}/dist/index.js",
-			"outFiles": ["${workspaceFolder}/dist/**/*"],
-			"preLaunchTask": "Build"
+			"runtimeExecutable": "yarn",
+			"runtimeArgs": ["node"],
+			"args": ["${workspaceFolder}/dist/index.js"],
+			"console": "integratedTerminal"
 		}
 	]
 }
