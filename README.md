@@ -26,6 +26,10 @@ You can also pass a question as an argument to the script, for example:
 yarn run start "How many words does this prompt contain?"
 ```
 
+Which should result in this:
+
+<img width="816" alt="image" src="https://github.com/blixt/gsm8k-math-solver/assets/158591/928af94f-0420-4cdf-83ec-153ebd4bc1d4">
+
 ## The theory
 
 By making the LLM write executable JavaScript and also show how that code
