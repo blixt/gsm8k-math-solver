@@ -34,7 +34,7 @@ function* inputs(data: QA[]): IterableIterator<{ question: string; answer?: stri
 
 async function main() {
 	// Keep asking random questions until process exits.
-	for (const { question, answer } of inputs(trainData)) {
+	for (const { question, answer } of inputs(testData)) {
 		const prompt = createPrompt(question);
 
 		console.log(chalk.magenta(question));
