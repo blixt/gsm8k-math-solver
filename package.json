@@ -1,14 +1,14 @@
 {
 	"name": "mathsolver",
 	"type": "module",
-	"packageManager": "yarn@4.2.1",
+	"packageManager": "yarn@4.2.2",
 	"scripts": {
 		"build": "tsc",
 		"start": "yarn run build && node dist/index.js"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.7.1",
-		"@types/node": "^20.12.7",
+		"@biomejs/biome": "^1.7.3",
+		"@types/node": "^20.12.12",
 		"typescript": "^5.4.5"
 	},
 	"dependencies": {
