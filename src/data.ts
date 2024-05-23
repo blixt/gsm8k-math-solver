@@ -1,11 +1,11 @@
 import { readFileSync } from "node:fs";
 
-export interface TestPair {
+export interface QA {
 	question: string;
 	answer: string;
 }
 
-function parseTestLine(line: string): { question: string; answer: string } {
+function parseLine(line: string): QA {
 	return JSON.parse(line);
 }
 
@@ -13,4 +13,9 @@ function parseTestLine(line: string): { question: string; answer: string } {
 export const testData = readFileSync("gsm8k/grade_school_math/data/test.jsonl", "utf8")
 	.trim()
 	.split("\n")
-	.map(parseTestLine);
+	.map(parseLine);
+
+export const trainData = readFileSync("gsm8k/grade_school_math/data/train.jsonl", "utf8")
+	.trim()
+	.split("\n")
+	.map(parseLine);

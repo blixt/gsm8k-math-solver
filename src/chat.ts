@@ -4,17 +4,19 @@ export interface Message {
 }
 
 export interface IncompleteChatStreamChunk {
+	done: false;
+
 	model: string;
 	created_at: string;
 	message: Message;
-	done: false;
 }
 
 export interface CompleteChatStreamChunk {
+	done: true;
+
 	model: string;
 	created_at: string;
 	message: Message;
-	done: boolean;
 	total_duration: number;
 	load_duration: number;
 	prompt_eval_duration: number;
@@ -61,6 +63,11 @@ export async function* chat(model: string, messages: Message[]): AsyncGenerator<
 	}
 	if (!response.body) {
 		throw new Error("No response body");
+	}
+	// Simulate a chunk if we gave the assistant initial content.
+	const lastMessage = messages[messages.length - 1];
+	if (lastMessage?.role === "assistant" && lastMessage.content !== "") {
+		yield { model, created_at: new Date().toISOString(), message: { ...lastMessage }, done: false };
 	}
 	// Read the response body line by line, parsing each line as JSON.
 	const stream = new JSONLineStream<ChatStreamChunk>();
